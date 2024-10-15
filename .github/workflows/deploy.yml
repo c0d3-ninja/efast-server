@@ -31,6 +31,9 @@ jobs:
         run: |
           echo "${{ secrets.VPS_KEY }}" > private_key
           chmod 600 private_key
+          # Add the VPS host to known_hosts
+          mkdir -p ~/.ssh
+          ssh-keyscan -H $VPS_IP >> ~/.ssh/known_hosts
           scp -i private_key -r ./* $VPS_USER@$VPS_IP:/var/www/efast-server
 
       - name: Run startProd script on VPS
@@ -41,4 +44,7 @@ jobs:
         run: |
           echo "${{ secrets.VPS_KEY }}" > private_key
           chmod 600 private_key
+          # Add the VPS host to known_hosts
+          mkdir -p ~/.ssh
+          ssh-keyscan -H $VPS_IP >> ~/.ssh/known_hosts
           ssh -i private_key $VPS_USER@$VPS_IP "cd /var/www/efast-server && npm install && npm run startProd"
