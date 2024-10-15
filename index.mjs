@@ -3,6 +3,8 @@ import 'dotenv/config.js';
 import AuthRouter from './src/Routes/Auth/auth.routes.mjs';
 import {log} from './src/Utills/log.utils.mjs';
 import {configureMiddleWares, connectMongo} from './src/Utills/common.utills.mjs';
+import WidgetsRouter from './src/Routes/Widgets/widgets.routes.mjs';
+import PublicRouter from './src/Routes/Public/public.routes.mjs';
 
 const port = process.env.PORT;
 
@@ -13,6 +15,8 @@ connectMongo();
 
 
 app.use('/api/v1/auth',AuthRouter);
+app.use('/api/v1/widgets',WidgetsRouter);
+app.use('/api/v1/public/widget',PublicRouter);
 
 app.use('/',(req,res) => {
   log('default route');

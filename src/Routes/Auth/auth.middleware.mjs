@@ -7,7 +7,11 @@ const jwtSecret = process.env.JWT_SECRET;
 
 export  const authMiddleware =  async (req,res,next) => {
   try{
-    const unAuthPaths= [`/api/v1/auth${authPaths.GENERATE_MAGIC_LINK}`,`/api/v1/auth${authPaths.LOGIN}`];
+    const unAuthPaths= [
+      `/api/v1/auth${authPaths.GENERATE_MAGIC_LINK}`,
+      `/api/v1/auth${authPaths.LOGIN}`,
+      '/api/v1/public/widget/details',
+    ];
     if(unAuthPaths.includes(req.path)){
       next();
     }else{
