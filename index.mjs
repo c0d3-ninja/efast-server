@@ -23,7 +23,6 @@ app.use('/',(req,res) => {
   res.json({});
 });
 
-
 app.listen(port, () => {
   log(`Server is running on port ${port}`);
 });
