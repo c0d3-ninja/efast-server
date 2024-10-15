@@ -4,7 +4,8 @@
   "main": "index.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node startServer.js efast-server"
+    "dev": "pm2 start  index.mjs --watch --ignore-watch=\"node_modules\" --name efast-server",
+    "startProd": "pm2 restart  index.mjs --name efast-server-prod"
   },
   "author": "",
   "license": "ISC",
