@@ -3,7 +3,7 @@ name: Deploy to VPS
 on:
   push:
     branches:
-      - main  # Change to your default branch
+      - main
 
 jobs:
   deploy:
@@ -11,21 +11,34 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          ref: main
 
-      - name: Install SSH client
-        run: sudo apt-get install -y openssh-client
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-      - name: Add VPS to known_hosts
-        run: ssh-keyscan -H ${{ secrets.VPS_IP }} >> ~/.ssh/known_hosts
+      - name: Install dependencies
+        run: npm install
 
-      - name: Deploy to VPS
+      - name: Copy files to VPS
         env:
-          VPS_IP: ${{ secrets.VPS_IP }}
+          VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER }}
-          VPS_KEY: ${{ secrets.VPS_KEY }}
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
         run: |
-          echo "$VPS_KEY" > key.pem
-          chmod 600 key.pem
-          scp -i key.pem -r . $VPS_USER@$VPS_IP:/var/www/efast-server
-          ssh -i key.pem $VPS_USER@$VPS_IP "cd /var/www/efast-server && npm install && npm run startProd"
+          echo "${{ secrets.VPS_SSH_KEY }}" > private_key
+          chmod 600 private_key
+          scp -i private_key -r ./* $VPS_USER@$VPS_HOST:/var/www/efast-server
+
+      - name: Run startProd script on VPS
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+        run: |
+          echo "${{ secrets.VPS_SSH_KEY }}" > private_key
+          chmod 600 private_key
+          ssh -i private_key $VPS_USER@$VPS_HOST "cd /var/www/efast-server && npm install && npm run startProd"
