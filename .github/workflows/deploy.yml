@@ -25,20 +25,20 @@ jobs:
 
       - name: Copy files to VPS
         env:
-          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_IP: ${{ secrets.VPS_IP }}
           VPS_USER: ${{ secrets.VPS_USER }}
-          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          VPS_KEY: ${{ secrets.VPS_KEY }}
         run: |
-          echo "${{ secrets.VPS_SSH_KEY }}" > private_key
+          echo "${{ secrets.VPS_KEY }}" > private_key
           chmod 600 private_key
-          scp -i private_key -r ./* $VPS_USER@$VPS_HOST:/var/www/efast-server
+          scp -i private_key -r ./* $VPS_USER@$VPS_IP:/var/www/efast-server
 
       - name: Run startProd script on VPS
         env:
-          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_IP: ${{ secrets.VPS_IP }}
           VPS_USER: ${{ secrets.VPS_USER }}
-          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          VPS_KEY: ${{ secrets.VPS_KEY }}
         run: |
-          echo "${{ secrets.VPS_SSH_KEY }}" > private_key
+          echo "${{ secrets.VPS_KEY }}" > private_key
           chmod 600 private_key
-          ssh -i private_key $VPS_USER@$VPS_HOST "cd /var/www/efast-server && npm install && npm run startProd"
+          ssh -i private_key $VPS_USER@$VPS_IP "cd /var/www/efast-server && npm install && npm run startProd"
