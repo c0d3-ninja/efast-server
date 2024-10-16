@@ -22,7 +22,7 @@ PublicRouter.get('/details',async (req,res) => {
     const widgetObj = widgetDbObject.toObject();
     res.json({
       message:'success',
-      data:widgetObj,
+      data: {...widgetObj,moduleUrl:'http://localhost/cookiecat/widget/dist/index.js'},
     });
   }catch (e){
     res.status(500).json({});
