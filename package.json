@@ -5,7 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "pm2 start  index.local.mjs --watch --ignore-watch=\"node_modules\" --name efast-server",
-    "startProd": "pm2 stop efast-server-prod && ppm2 start  index.mjs --name efast-server-prod"
+    "dev1": "pm2 startOrRestart ecosystem.config.js --watch",
+    "startProd": "pm2 startOrRestart ecosystem.config.js --env production"
   },
   "author": "",
   "license": "ISC",
@@ -15,7 +16,6 @@
     "body-parser": "^1.20.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
-    "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "jsonwebtoken": "^9.0.2",
