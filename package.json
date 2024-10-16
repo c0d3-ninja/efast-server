@@ -4,9 +4,8 @@
   "main": "index.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "pm2 start  index.local.mjs --watch --ignore-watch=\"node_modules\" --name efast-server",
-    "dev1": "pm2 startOrRestart ecosystem.config.js --watch",
-    "startProd": "pm2 startOrRestart ecosystem.config.js --env production"
+    "dev": "pm2 startOrRestart ecosystem.config.js --watch",
+    "prod": "pm2 startOrRestart ecosystem.config.js --env production"
   },
   "author": "",
   "license": "ISC",
