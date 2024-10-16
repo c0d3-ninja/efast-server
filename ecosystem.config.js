@@ -24,7 +24,7 @@ module.exports = {
       'host' : ['82.112.234.54'],
       'ref'  : 'origin/master',
       'repo' : 'git@github.com:c0d3-ninja/efast-server.git',
-      'path' : '/var/www/efa-server',
+      'path' : '/var/www/efast-server',
       'post-deploy' : 'npm install',
     },
   },
