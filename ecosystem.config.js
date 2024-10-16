@@ -22,7 +22,7 @@ module.exports = {
     production : {
       'user' : 'root',
       'host' : ['82.112.234.54'],
-      'ref'  : 'origin/master',
+      'ref'  : 'origin/main',
       'repo' : 'git@github.com:c0d3-ninja/efast-server.git',
       'path' : '/var/www/efast-server',
       'post-deploy' : 'npm install',
