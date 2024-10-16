@@ -25,7 +25,7 @@ module.exports = {
       'ref'  : 'origin/main',
       'repo' : 'git@github.com:c0d3-ninja/efast-server.git',
       'path' : '/var/www/efast-server',
-      'post-deploy' : 'npm install',
+      'post-deploy' : '/root/.nvm/versions/node/v22.9.0/bin/npm install',
     },
   },
 
