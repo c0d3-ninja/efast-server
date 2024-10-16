@@ -26,7 +26,7 @@ module.exports = {
       'repo' : 'git@github.com:c0d3-ninja/efast-server.git',
       'path' : '/var/www/efast-server',
       key: '~/.ssh/vps',
-      'post-deploy' : 'sudo npm install',
+      'post-deploy' : 'source /root/.nvm/nvm.sh && npm install',
     },
   },
 
