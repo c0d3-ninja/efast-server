@@ -8,7 +8,7 @@ export async function sendMail (
   return new Promise((resolve,reject) => {
     try{
       const transporter = nodemailer.createTransport({
-        host: 'srv623447.hstgr.cloud', // Replace with your mail server hostname
+        host: process.env.MAIL_HOST, // Replace with your mail server hostname
         port: 465, // Use port 465 for SSL, or 587 for STARTTLS
         secure: true, // Set true if port is 465
         auth: {

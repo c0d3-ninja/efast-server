@@ -11,6 +11,7 @@ module.exports = {
         'JWT_SECRET':'d3v5ecr3t_token',
         'MONGO_DB_NAME':'efast_dev',
         'DOMAIN':'http://localhost',
+        'MAIL_HOST':'srv623447.hstgr.cloud',
       },
       env_production: {
         'PORT': 5001,
@@ -19,6 +20,7 @@ module.exports = {
         'JWT_SECRET':'production_token',
         'MONGO_DB_NAME':'efast_prod',
         'DOMAIN':'https://embedfa.st',
+        'MAIL_HOST':'srv623447.hstgr.cloud',
       },
     },
   ],
