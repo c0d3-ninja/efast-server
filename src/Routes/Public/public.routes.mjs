@@ -29,5 +29,4 @@ PublicRouter.get('/details',async (req,res) => {
   }
 });
 
-
 export default PublicRouter;

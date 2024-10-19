@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import {log} from '../../Utills/log.utils.mjs';
 import validator from 'validator';
 import UsersDb from '../Users/users.schema.mjs';
+import {sendMail} from '../../Utills/mail.utils.mjs';
 
 const magicTokenSecret = process.env.JWT_SECRET_MAGIC_TOKEN;
 const jwtSecret = process.env.JWT_SECRET;
@@ -30,6 +31,16 @@ AuthRouter.post(authPaths.GENERATE_MAGIC_LINK,async (req,res) => {
         });
         await  newUser.save();
       }
+      const link = process.env.DOMAIN+`/auth/magic-link?token=${magicToken}`;
+      await sendMail({
+        from:'postmaster@flashsto.re',
+        fromPassword:'test1234',
+        to:email,
+        subject:'embedfa.st Here is your magic link',
+        content:`<div>Click below link to login. This link will expire in 15 mins<br/>
+                    <a href="${link}">${link}</a>
+                    </div>`,
+      });
       // const magicLink = `http://localhost:3000/auth/magic-link?token=${token}`;
       // console.log(magicLink);
       return res.json({message:'Magic link sent to your email.',magicToken});

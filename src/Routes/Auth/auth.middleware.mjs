@@ -11,6 +11,7 @@ export  const authMiddleware =  async (req,res,next) => {
       `/api/v1/auth${authPaths.GENERATE_MAGIC_LINK}`,
       `/api/v1/auth${authPaths.LOGIN}`,
       '/api/v1/public/widget/details',
+      '/api/v1/public/widget/sendmail',
     ];
     if(unAuthPaths.includes(req.path)){
       next();
