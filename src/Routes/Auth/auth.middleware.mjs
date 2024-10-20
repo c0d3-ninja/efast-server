@@ -10,8 +10,10 @@ export  const authMiddleware =  async (req,res,next) => {
     const unAuthPaths= [
       `/api/v1/auth${authPaths.GENERATE_MAGIC_LINK}`,
       `/api/v1/auth${authPaths.LOGIN}`,
+      `/api/v1/auth${authPaths.GOOGLE_LOGIN}`,
       '/api/v1/public/widget/details',
       '/api/v1/public/widget/sendmail',
+      '/oauth2/callback',
     ];
     if(unAuthPaths.includes(req.path)){
       next();

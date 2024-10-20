@@ -12,6 +12,8 @@ module.exports = {
         'MONGO_DB_NAME':'efast_dev',
         'DOMAIN':'http://localhost',
         'MAIL_HOST':'srv623447.hstgr.cloud',
+        'G_LOGIN_CLIENT_ID':'532346363316-tmhf8n8c1i209hob2587ats1rob51247.apps.googleusercontent.com',
+        'G_LOGIN_CLIENT_SECRET':'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',
       },
       env_production: {
         'PORT': 5001,
@@ -21,6 +23,8 @@ module.exports = {
         'MONGO_DB_NAME':'efast_prod',
         'DOMAIN':'https://embedfa.st',
         'MAIL_HOST':'srv623447.hstgr.cloud',
+        'G_LOGIN_CLIENT_ID':'532346363316-tmhf8n8c1i209hob2587ats1rob51247.apps.googleusercontent.com',
+        'G_LOGIN_CLIENT_SECRET':'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',
       },
     },
   ],

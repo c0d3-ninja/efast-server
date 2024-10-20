@@ -1,4 +1,4 @@
-import  'dotenv/config.js';
+import 'dotenv/config.js';
 import express from 'express';
 import {configureMiddleWares, connectMongo} from './src/Utills/common.utills.mjs';
 import AuthRouter from './src/Routes/Auth/auth.routes.mjs';
