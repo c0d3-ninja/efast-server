@@ -9,8 +9,7 @@ import {verifyGoogleToken} from '../../Utills/login.utils.mjs';
 import {generateMagicTokenAndSave} from './auth.dbUtils.mjs';
 import {envKeys, getEnvValue} from '../../Utills/env.utils.mjs';
 
-const magicTokenSecret = getEnvValue(envKeys.JWT_SECRET_MAGIC_TOKEN);
-const jwtSecret =getEnvValue(envKeys.JWT_SECRET);
+
 
 const AuthRouter = getRouter();
 
@@ -41,6 +40,8 @@ AuthRouter.post(authPaths.GENERATE_MAGIC_LINK,async (req,res) => {
 
 AuthRouter.post(authPaths.LOGIN,async (req,res) => {
   try{
+    const magicTokenSecret = getEnvValue(envKeys.JWT_SECRET_MAGIC_TOKEN);
+    const jwtSecret =getEnvValue(envKeys.JWT_SECRET);
     const {magicToken} = req.body;
     if(magicToken?.trim().length>0){
       const decoded = jwt.decode(magicToken,magicTokenSecret);
@@ -75,8 +76,8 @@ AuthRouter.post(authPaths.LOGIN,async (req,res) => {
 AuthRouter.post(authPaths.GOOGLE_LOGIN,async (req,res) => {
   try{
     const {code} = req.body;
+    const jwtSecret =getEnvValue(envKeys.JWT_SECRET);
     if(code?.trim().length>0){
-
       const {email} = await verifyGoogleToken(code);
       if(!email){
         return res.status(400).json({message:'Invalid token'});

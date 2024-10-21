@@ -4,10 +4,9 @@ import jwt from 'jsonwebtoken';
 import {log} from '../../Utills/log.utils.mjs';
 import {envKeys, getEnvValue} from '../../Utills/env.utils.mjs';
 
-const jwtSecret = getEnvValue(envKeys.JWT_SECRET);
-
 export  const authMiddleware =  async (req,res,next) => {
   try{
+    const jwtSecret = getEnvValue(envKeys.JWT_SECRET);
     const unAuthPaths= [
       `/api/v1/auth${authPaths.GENERATE_MAGIC_LINK}`,
       `/api/v1/auth${authPaths.LOGIN}`,

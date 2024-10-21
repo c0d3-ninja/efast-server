@@ -1,4 +1,4 @@
-import { OAuth2Client } from 'google-auth-library';
+import {OAuth2Client} from 'google-auth-library';
 import {envKeys, getEnvValue} from './env.utils.mjs';
 
 
