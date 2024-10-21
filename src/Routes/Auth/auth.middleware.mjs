@@ -3,7 +3,7 @@ import {authPaths} from './auth.constants.mjs';
 import jwt from 'jsonwebtoken';
 import {log} from '../../Utills/log.utils.mjs';
 
-const jwtSecret = process.env.JWT_SECRET;
+const jwtSecret = process.env.JWT_SUPERNOVA;
 
 export  const authMiddleware =  async (req,res,next) => {
   try{
