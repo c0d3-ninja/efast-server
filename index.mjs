@@ -6,7 +6,6 @@ import PublicRouter from './src/Routes/Public/public.routes.mjs';
 import {log} from './src/Utills/log.utils.mjs';
 import OAuthRouter from './src/Routes/OAuth/oAuth.routes.mjs';
 import dotenv from 'dotenv';
-import {envKeys, getEnvValue} from './src/Utills/env.utils.mjs';
 
 dotenv.config();
 
