@@ -6,6 +6,7 @@ import validator from 'validator';
 import UsersDb from '../Users/users.schema.mjs';
 import {sendMail} from '../../Utills/mail.utils.mjs';
 import {verifyGoogleToken} from '../../Utills/login.utils.mjs';
+import {generateMagicTokenAndSave} from './auth.dbUtils.mjs';
 
 const magicTokenSecret = process.env.JWT_SECRET_MAGIC_TOKEN;
 const jwtSecret = process.env.JWT_SECRET;
@@ -16,22 +17,7 @@ AuthRouter.post(authPaths.GENERATE_MAGIC_LINK,async (req,res) => {
   try{
     const {email=''} = req.body;
     if(validator.isEmail(email)){
-      const magicToken = jwt.sign({email},magicTokenSecret,{expiresIn:'1d'});
-      const user = await UsersDb.findOne({
-        email,
-      });
-      if(user){
-        await UsersDb.updateOne({
-          email,
-        },{$set:{magicToken}});
-
-      }else{
-        const newUser = new UsersDb({
-          email,
-          magicToken,
-        });
-        await  newUser.save();
-      }
+      const {magicToken} = await generateMagicTokenAndSave(email);
       const link = process.env.DOMAIN+`/auth/magic-link?token=${magicToken}`;
       await sendMail({
         from:'postmaster@flashsto.re',
