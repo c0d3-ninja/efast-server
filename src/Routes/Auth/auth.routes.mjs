@@ -8,8 +8,8 @@ import {sendMail} from '../../Utills/mail.utils.mjs';
 import {verifyGoogleToken} from '../../Utills/login.utils.mjs';
 import {generateMagicTokenAndSave} from './auth.dbUtils.mjs';
 
-const magicTokenSecret = process.env.JWT_SUPERNOVA_MAGIC_TOKEN;
-const jwtSecret = process.env.JWT_SUPERNOVA;
+const magicTokenSecret = process.env.JWT_SECRET_MAGIC_TOKEN;
+const jwtSecret = process.env.JWT_SECRET;
 
 const AuthRouter = getRouter();
 
