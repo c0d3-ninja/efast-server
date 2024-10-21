@@ -7,38 +7,12 @@ import UsersDb from '../Users/users.schema.mjs';
 import {sendMail} from '../../Utills/mail.utils.mjs';
 import {verifyGoogleToken} from '../../Utills/login.utils.mjs';
 import {generateMagicTokenAndSave} from './auth.dbUtils.mjs';
-import {envKeys, getEnvValue} from '../../Utills/env.utils.mjs';
-
+import {envKeys, getEnvValue, isProductionEnvironment} from '../../Utills/env.utils.mjs';
 
 
 const AuthRouter = getRouter();
 
-AuthRouter.post(authPaths.GENERATE_MAGIC_LINK,async (req,res) => {
-  try{
-    const {email=''} = req.body;
-    if(validator.isEmail(email)){
-      const {magicToken} = await generateMagicTokenAndSave(email);
-      const link = getEnvValue(envKeys.DOMAIN)+`/auth/magic-link?token=${magicToken}`;
-      await sendMail({
-        from:'postmaster@flashsto.re',
-        fromPassword:'test1234',
-        to:email,
-        subject:'embedfa.st Here is your magic link',
-        content:`<div>Click below link to login. This link will expire in 15 mins<br/>
-                    <a href="${link}">${link}</a>
-                    </div>`,
-      });
-      // const magicLink = `http://localhost:3000/auth/magic-link?token=${token}`;
-      // console.log(magicLink);
-      return res.json({message:'Magic link sent to your email.',magicToken});
-    }
-    res.status(400).json({message:'Invalid email'});
-  }catch (e){
-    res.status(500).json({message:'Internal server error'});
-  }
-});
-
-AuthRouter.post(authPaths.LOGIN,async (req,res) => {
+const login = async (req,res) => {
   try{
     const magicTokenSecret = getEnvValue(envKeys.JWT_SECRET_MAGIC_TOKEN);
     const jwtSecret =getEnvValue(envKeys.JWT_SECRET);
@@ -72,7 +46,37 @@ AuthRouter.post(authPaths.LOGIN,async (req,res) => {
     log(e.message);
     return res.status(500).json({message:'Internal server error'});
   }
+};
+
+AuthRouter.post(authPaths.GENERATE_MAGIC_LINK,async (req,res) => {
+  try{
+    const {email=''} = req.body;
+    if(validator.isEmail(email)){
+      const {magicToken} = await generateMagicTokenAndSave(email);
+      const link = getEnvValue(envKeys.DOMAIN)+`/auth/login/callback?token=${magicToken}`;
+      if(isProductionEnvironment()){
+        await sendMail({
+          from:'postmaster@flashsto.re',
+          fromPassword:'test1234',
+          to:email,
+          subject:'embedfa.st Here is your magic link',
+          content:`<div>Click below link to login. This link will expire in 15 mins<br/>
+                    <a href="${link}">${link}</a>
+                    </div>`,
+        });
+        return res.json({message:'Magic link sent to your email.',magicToken});
+      }else{
+        req.body={magicToken};
+        return await login(req,res);
+      }
+    }
+    return res.status(400).json({message:'Invalid email'});
+  }catch (e){
+    return res.status(500).json({message:'Internal server error'});
+  }
 });
+
+AuthRouter.post(authPaths.LOGIN,login);
 AuthRouter.post(authPaths.GOOGLE_LOGIN,async (req,res) => {
   try{
     const {code} = req.body;

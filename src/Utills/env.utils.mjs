@@ -10,9 +10,16 @@ export const envKeys = {
   G_LOGIN_OAUTH2_CALLBACK:'G_LOGIN_OAUTH2_CALLBACK',
 };
 
+export const isDevEnvironment = () => {
+  return process.env.NODE_ENV==='development';
+};
+
+export const isProductionEnvironment = () => {
+  return process.env.NODE_ENV==='production';
+};
+
 export const getEnvValue = (key) => {
-  const nodeEnv = process.env.NODE_ENV;
-  if(nodeEnv==='production'){
+  if(isProductionEnvironment()){
     return process.env[key+'_PRODUCTION'];
   }
   return process.env[key];

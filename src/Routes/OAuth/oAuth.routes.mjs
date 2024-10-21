@@ -15,7 +15,7 @@ OAuthRouter.get('/callback',async (req,res) => {
     const {email} = await verifyGoogleToken(code);
     if(email){
       const {magicToken} = await generateMagicTokenAndSave(email);
-      return res.redirect(`/googleSignIn/callback?token=${magicToken}`);
+      return res.redirect(`/auth/login/callback?token=${magicToken}`);
     }
     return res.redirect(invalidTokenUrl);
   }catch (e){
