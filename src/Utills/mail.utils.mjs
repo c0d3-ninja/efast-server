@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import {envKeys, getEnvValue} from './env.utils.mjs';
 
 export async function sendMail (
   {
@@ -8,7 +9,7 @@ export async function sendMail (
   return new Promise((resolve,reject) => {
     try{
       const transporter = nodemailer.createTransport({
-        host: process.env.MAIL_HOST, // Replace with your mail server hostname
+        host: getEnvValue(envKeys.MAIL_HOST), // Replace with your mail server hostname
         port: 465, // Use port 465 for SSL, or 587 for STARTTLS
         secure: true, // Set true if port is 465
         auth: {

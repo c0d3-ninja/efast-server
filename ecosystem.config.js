@@ -6,7 +6,7 @@ module.exports = {
       watch:true,
       env: {
         'PORT': 5001,
-        'NODE_ENV': process.env.NODE_ENV,
+        'NODE_ENV': 'development',
         'JWT_SECRET_MAGIC_TOKEN':process.env.JWT_SECRET_MAGIC_TOKEN,
         'JWT_SECRET':process.env.JWT_SECRET,
         'MONGO_DB_NAME':process.env.MONGO_DB_NAME,
@@ -17,7 +17,7 @@ module.exports = {
       },
       env_production: {
         'PORT': 5001,
-        'NODE_ENV': process.env.NODE_ENV_PRODUCTION,
+        'NODE_ENV': 'production',
         'JWT_SECRET_MAGIC_TOKEN':process.env.JWT_SECRET_MAGIC_TOKEN_PRODUCTION,
         'JWT_SECRET':process.env.JWT_SECRET_MAGIC_TOKEN,
         'MONGO_DB_NAME':process.env.MONGO_DB_NAME_PRODUCTION,

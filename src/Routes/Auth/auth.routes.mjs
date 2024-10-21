@@ -7,9 +7,10 @@ import UsersDb from '../Users/users.schema.mjs';
 import {sendMail} from '../../Utills/mail.utils.mjs';
 import {verifyGoogleToken} from '../../Utills/login.utils.mjs';
 import {generateMagicTokenAndSave} from './auth.dbUtils.mjs';
+import {envKeys, getEnvValue} from '../../Utills/env.utils.mjs';
 
-const magicTokenSecret = process.env.JWT_SECRET_MAGIC_TOKEN;
-const jwtSecret = process.env.JWT_SECRET;
+const magicTokenSecret = getEnvValue(envKeys.JWT_SECRET_MAGIC_TOKEN);
+const jwtSecret =getEnvValue(envKeys.JWT_SECRET);
 
 const AuthRouter = getRouter();
 
@@ -18,7 +19,7 @@ AuthRouter.post(authPaths.GENERATE_MAGIC_LINK,async (req,res) => {
     const {email=''} = req.body;
     if(validator.isEmail(email)){
       const {magicToken} = await generateMagicTokenAndSave(email);
-      const link = process.env.DOMAIN+`/auth/magic-link?token=${magicToken}`;
+      const link = getEnvValue(envKeys.DOMAIN)+`/auth/magic-link?token=${magicToken}`;
       await sendMail({
         from:'postmaster@flashsto.re',
         fromPassword:'test1234',

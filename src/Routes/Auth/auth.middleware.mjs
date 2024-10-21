@@ -2,8 +2,9 @@ import UsersDb from '../Users/users.schema.mjs';
 import {authPaths} from './auth.constants.mjs';
 import jwt from 'jsonwebtoken';
 import {log} from '../../Utills/log.utils.mjs';
+import {envKeys, getEnvValue} from '../../Utills/env.utils.mjs';
 
-const jwtSecret = process.env.JWT_SECRET;
+const jwtSecret = getEnvValue(envKeys.JWT_SECRET);
 
 export  const authMiddleware =  async (req,res,next) => {
   try{

@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken';
 import UsersDb from '../Users/users.schema.mjs';
+import {envKeys, getEnvValue} from '../../Utills/env.utils.mjs';
 
-const magicTokenSecret = process.env.JWT_SECRET_MAGIC_TOKEN;
+const magicTokenSecret = getEnvValue(envKeys.JWT_SECRET_MAGIC_TOKEN);
 export const generateMagicTokenAndSave = async (email) => {
   const magicToken = jwt.sign({email},magicTokenSecret,{expiresIn:'1d'});
   const user = await UsersDb.findOne({

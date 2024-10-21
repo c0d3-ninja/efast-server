@@ -1,4 +1,3 @@
-import 'dotenv/config.js';
 import express from 'express';
 import {configureMiddleWares, connectMongo} from './src/Utills/common.utills.mjs';
 import AuthRouter from './src/Routes/Auth/auth.routes.mjs';
@@ -6,6 +5,10 @@ import WidgetsRouter from './src/Routes/Widgets/widgets.routes.mjs';
 import PublicRouter from './src/Routes/Public/public.routes.mjs';
 import {log} from './src/Utills/log.utils.mjs';
 import OAuthRouter from './src/Routes/OAuth/oAuth.routes.mjs';
+import dotenv from 'dotenv';
+import {envKeys, getEnvValue} from './src/Utills/env.utils.mjs';
+
+dotenv.config();
 
 const port = process.env.PORT;
 
@@ -23,7 +26,7 @@ app.use('/',(req,res) => {
   res.json({});
 });
 
-app.listen(port, () => {
+app.listen(5001, () => {
   log(`Server is running on port ${port}`);
 });
 
