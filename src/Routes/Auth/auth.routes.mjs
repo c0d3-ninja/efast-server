@@ -36,7 +36,9 @@ const login = async (req,res) => {
       await UsersDb.updateOne({
         email,
       },{$unset:{magicToken:''}});
-      return res.json({message:'Token verified',data:{email,userId:userObject._id.toString()}});
+      return res.json({message:'Token verified',
+        jwtToken,
+        data:{email,userId:userObject._id.toString()}});
     }
     return res.status(400).json({message:'Invalid token'});
   }catch (e){

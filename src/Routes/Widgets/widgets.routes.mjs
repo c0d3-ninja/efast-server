@@ -1,7 +1,23 @@
 import {getRouter} from '../../Utills/common.utills.mjs';
 import WidgetsDb from './widgets.schema.mjs';
+import {log} from '../../Utills/log.utils.mjs';
 
 const WidgetsRouter = getRouter();
+
+WidgetsRouter.get('/get',async (req,res) => {
+  try{
+    const {_id:createdBy} = req.currentUser;
+    const widgets = await WidgetsDb.find({
+      createdBy,
+    });
+    return res.json({
+      data:widgets,
+    });
+  }catch (e){
+    log(e);
+    res.status(500).json({});
+  }
+});
 
 
 WidgetsRouter.post('/create',async (req,res) => {
@@ -21,6 +37,7 @@ WidgetsRouter.post('/create',async (req,res) => {
       data:widgetObj,
     });
   }catch (e){
+    log(e);
     res.status(500).json({});
   }
 });
@@ -62,6 +79,5 @@ WidgetsRouter.get('/details',async (req,res) => {
     res.status(500).json({});
   }
 });
-
 
 export default WidgetsRouter;
