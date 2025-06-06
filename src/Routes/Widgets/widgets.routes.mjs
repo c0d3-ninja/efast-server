@@ -74,9 +74,20 @@ WidgetsRouter.patch('/edit',async (req,res) => {
 
 WidgetsRouter.get('/details',async (req,res) => {
   try{
-    res.json({});
+    const {wId} = req.query;
+    const {_id:createdBy} = req.currentUser;
+    const widgetDetails = await WidgetsDb.findOne({
+      _id: wId,
+      createdBy,
+    });
+    if(!widgetDetails){
+      return res.status(400).json({
+        message:'Widget not found',
+      });
+    }
+    return res.json({data:widgetDetails});
   }catch (e){
-    res.status(500).json({});
+    return res.status(500).json({});
   }
 });
 
